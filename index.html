@@ -45,7 +45,7 @@
 		<div id="workspaceDiv"></div>
 		<div id="stageDiv">
 			<div id="stageDisplay">
-				<button id="real">real</button><iframe id="evenmorereal"></iframe></div>
+				<button id="real">real</button></br><iframe id="evenmorereal"></iframe></div>
 			</div>
 		</div>
 		<script>
@@ -198,6 +198,8 @@
 				const workspaceex = Blockly.getMainWorkspace();
 				const code = Blockly.JavaScript.workspaceToCode(workspaceex);
 				button.innerHTML = code;
+				iframe.style.width = "100%";
+				iframe.style.height = iframe.parentElement.clientWidth / 1.778;
 				iframe.src = 'data:text/html;charset=utf-8,<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><script src="https://unpkg.com/kaboom@3000.0.3/dist/kaboom.js"><' + '/script></head><body><script>' + code + '<' + '/script></body>';
 			});
 		</script>
