@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>boboblocks</title>
+	<script src="https://unpkg.com/blockly/blockly.min.js">
+	</script>
+	<style>
+		body {
+			font-family: sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		#blocklyDiv {
+			height: 100vh;
+			display: flex;
+		}
+
+		#workspaceDiv {
+			flex: 1;
+		}
+
+		#stageDiv {
+			flex: 0 0 30%;
+			border-left: 1px solid #ddd;
+			position: relative;
+			padding-top: 56.25%;
+
+		}
+
+		#stageDisplay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #ddd;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="blocklyDiv">
+		<div id="workspaceDiv"></div>
+		<div id="stageDiv">
+			<div id="stageDisplay">
+				<button id="real">real</button></div>
+			</div>
+		</div>
+		<script>
+			Blockly.Blocks['load_default_bean'] = {
+				init: function() {
+					this.jsonInit({
+						"message0": 'load bean',
+						"args0": [],
+						"previousStatement": null, 
+						"nextStatement": null, 
+						"colour": 160,
+						"tooltip": 'bean!',
+						"helpUrl": null
+					});
+					this.setTooltip('loads the inbuilt bean sprite.');
+				}
+			};
+			Blockly.Blocks['load_from_url'] = {
+				init: function() {
+					this.jsonInit({
+						"message0": 'load sprite from %1 with name %2',
+						args0: [{
+							type: 'field_input',
+							name: 'URL',
+							text: 'https://kaboomjs.com/sprites/bobo.png'
+						}, {
+							type: 'field_input',
+							name: 'NAME',
+							text: 'bobo'
+						}],
+						"previousStatement": null, 
+						"nextStatement": null, 
+						"colour": 160,
+						"tooltip": 'bean!',
+						"helpUrl": null
+					});
+					this.setTooltip('loads a sprite from an image with a name.');
+				}
+			};
+			Blockly.Blocks['kaboom'] = {
+				init: function() {
+					this.jsonInit({
+						"message0": 'kaboom!',
+						"args0": [],
+						"nextStatement": null, 
+						"colour": "#db3d21",
+						"tooltip": "kaboom!",
+						"helpUrl": null,
+						"style": {
+							"hat": "cap"
+						}
+					});
+					this.startHat = true;
+					this.setTooltip('kaboom! this block is required to start the game.');
+				}
+			};
+			Blockly.Blocks['setconst'] = {
+				init: function() {
+					this.jsonInit({
+						type: 'setconst',
+						message0: 'set constant variable %1 to %2',
+						args0: [{
+							type: 'field_input',
+							name: 'VAR_NAME',
+							text: 'name'
+						}, {
+							type: 'input_value',
+							name: 'VAR_VALUE'
+						}],
+						colour: "#cf8a3c",
+						previousStatement: null,
+						nextStatement: null,
+						tooltip: 'sets a constant variable. it can not be edited later.'
+					});
+				}
+			};
+			Blockly.Blocks['string'] = {
+				init: function() {
+					this.jsonInit({
+						"type": "string",
+						"message0": "string %1",
+						"args0": [{
+							"type": "field_input",
+							"name": "NAME"
+						}],
+						"output": "String",
+						"colour": 230,
+						"tooltip": "this block is used to write strings where input types can be interchangable.",
+						"helpUrl": ""
+					});
+				}
+			};
+			Blockly.JavaScript['load_default_bean'] = function(block) {
+				return 'loadBean();';
+			};
+			Blockly.JavaScript['kaboom'] = function(block) {
+				return 'kaboom();';
+			};
+			Blockly.JavaScript['setconst'] = function(block) {
+				return 'const ' + block.getFieldValue('VAR_NAME') + " = " + Blockly.JavaScript.valueToCode(block, "VAR_VALUE", 1) + ";";
+			};
+			Blockly.JavaScript['string'] = function(block) {
+				const stringcode = '"' + block.getFieldValue('NAME') + '"';
+				return [stringcode, Blockly.JavaScript.ORDER_NONE];
+			};
+			const toolbox = {
+				'kind': 'categoryToolbox',
+				'contents': [{
+					'kind': 'category',
+					'name': 'events',
+					'contents': [{
+						'kind': 'block',
+						'type': 'kaboom'
+					}]
+				}, {
+					'kind': 'category',
+					'name': 'sprites',
+					'contents': [{
+						'kind': 'block',
+						'type': 'load_default_bean'
+					}, {
+						'kind': 'block',
+						'type': 'load_from_url'
+					}]
+				}, {
+					'kind': 'category',
+					'name': 'literals',
+					'contents': [{
+						'kind': 'block',
+						'type': 'string'
+					}]
+				}, {
+					'kind': 'category',
+					'name': 'variables',
+					'contents': [{
+						'kind': 'block',
+						'type': 'setconst'
+					}]
+				}]
+			};
+			var workspace = Blockly.inject('workspaceDiv', {
+				toolbox: toolbox,
+				renderer: 'zelos'
+			});
+			const button = document.getElementById("real");
+			button.addEventListener("click", function() {
+				const workspaceex = Blockly.getMainWorkspace();
+				const code = Blockly.JavaScript.workspaceToCode(workspaceex);
+				button.innerHTML = code
+			});
+		</script>
+</body>
+
+</html>
