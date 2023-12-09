@@ -148,7 +148,7 @@
 				return 'const ' + block.getFieldValue('VAR_NAME') + " = " + Blockly.JavaScript.valueToCode(block, "VAR_VALUE", 0) + ";";
 			};
 			Blockly.JavaScript['string'] = function(block) {
-				const stringcode = '"' + block.getFieldValue('NAME') + '"';
+				const stringcode = String.raw'"' + block.getFieldValue('NAME') + '"';
 				return [stringcode, Blockly.JavaScript.ORDER_NONE];
 			};
 			const toolbox = {
