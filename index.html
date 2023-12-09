@@ -145,7 +145,7 @@
 				return 'kaboom();';
 			};
 			Blockly.JavaScript['setconst'] = function(block) {
-				return 'const ' + block.getFieldValue('VAR_NAME') + " = " + Blockly.JavaScript.valueToCode(block, "VAR_VALUE") + ";";
+				return 'const ' + block.getFieldValue('VAR_NAME') + " = " + Blockly.JavaScript.valueToCode(block, "VAR_VALUE", 1) + ";";
 			};
 			Blockly.JavaScript['string'] = function(block) {
 				const stringcode = '"' + block.getFieldValue('NAME') + '"';
