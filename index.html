@@ -171,47 +171,64 @@
 				return [stringcode, Blockly.JavaScript.ORDER_NONE];
 			};
 			const toolbox = {
-				'kind': 'categoryToolbox',
-				'contents': [{
-					'kind': 'category',
-					'name': 'events',
-					'contents': [{
-						'kind': 'block',
-						'type': 'kaboom'
-					}]
-				}, {
-					'kind': 'category',
-					'name': 'sprites',
-					'contents': [{
-						'kind': 'block',
-						'type': 'load_default_bean'
-					}, {
-						'kind': 'block',
-						'type': 'load_from_url'
-					}]
-				}, {
-					'kind': 'category',
-					'name': 'literals',
-					'contents': [{
-						'kind': 'block',
-						'type': 'string'
-					}]
-				}, {
-					'kind': 'category',
-					'name': 'variables',
-					'contents': [{
-						'kind': 'block',
-						'type': 'setconst'
+			    "kind": "categoryToolbox",
+			    "contents": [
+				{
+				    "kind": "category",
+				    "name": "events",
+				    "contents": [
+					{
+					    "kind": "block",
+					    "type": "kaboom"
+					}
+				    ]
+				},
+				{
+				    "kind": "category",
+				    "name": "sprites",
+				    "contents": [
+					{
+					    "kind": "block",
+					    "type": "load_default_bean"
 					},
-{
-					'kind': 'category',
-					'name': 'raw',
-					'contents': [{
-						'kind': 'block',
-						'type': 'raw'
-					}]
-				}]
-			}
+					{
+					    "kind": "block",
+					    "type": "load_from_url"
+					}
+				    ]
+				},
+				{
+				    "kind": "category",
+				    "name": "literals",
+				    "contents": [
+					{
+					    "kind": "block",
+					    "type": "string"
+					}
+				    ]
+				},
+				{
+				    "kind": "category",
+				    "name": "variables",
+				    "contents": [
+					{
+					    "kind": "block",
+					    "type": "setconst"
+					}
+				    ]
+				},
+				{
+				    "kind": "category",
+				    "name": "raw",
+				    "contents": [
+					{
+					    "kind": "block",
+					    "type": "raw"
+					}
+				    ]
+				}
+			    ]
+			};
 			var workspace = Blockly.inject('workspaceDiv', {
 				toolbox: toolbox,
 				renderer: 'zelos'
