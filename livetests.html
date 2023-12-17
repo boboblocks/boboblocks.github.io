@@ -5,9 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Kaboom Blockly Page</title>
   <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+<style>
+		body {
+			font-family: sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		#blocklyDiv {
+			height: 100vh;
+			display: flex;
+		}
+
+		#workspaceDiv {
+			flex: 1;
+		}
+
+		#stageDiv {
+			flex: 0 0 30%;
+			border-left: 1px solid #ddd;
+			position: relative;
+			padding-top: 56.25%;
+
+		}
+
+		#stageDisplay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #ddd;
+		}
+	</style>
 </head>
 <body>
-  <div id="blocklyDiv"></div>
+  <div id="blocklyDiv">
+		<div id="workspaceDiv"></div>
+		<div id="stageDiv">
+			<div id="stageDisplay">
+				<button id="real">real</button></br><iframe id="evenmorereal"></iframe></div>
+			</div>
+		</div>
   <xml id="toolbox" style="display: none">
     <category name="events" colour="#a55b80">
       <block type="mousemove"></block>
@@ -55,15 +94,10 @@
     </category>
   </xml>
   <script>
-const workspace = Blockly.inject('blocklyDiv', {
-  renderer: 'zelos',
-  toolbox: document.getElementById('toolbox'),
-  move: false,
-  trashcan: true,
-  readOnly: false,
-  theme: 'zelos',
-  scrollbars: false,
-});
+var workspace = Blockly.inject('workspaceDiv', {
+				toolbox: document.getElementById("toolbox"),
+				renderer: 'zelos'
+			});
 
 Blockly.defineBlocksWithJsonArray([{
   "type": "mousex",
