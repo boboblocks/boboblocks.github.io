@@ -59,13 +59,13 @@ const workspace = Blockly.inject('blocklyDiv', {
   renderer: 'zelos',
   toolbox: document.getElementById('toolbox'),
   move: false,
-  trashcan: false,
+  trashcan: true,
   readOnly: false,
   theme: 'zelos',
   scrollbars: false,
 });
 
-Blockly.Blocks.defineBlocksWithJsonArray([{
+Blockly.defineBlocksWithJsonArray([{
   "type": "mousex",
   "message0": "mouse x",
   "output": "Number",
