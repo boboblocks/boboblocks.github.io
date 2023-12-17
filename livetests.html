@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Kaboom Blockly Page</title>
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+</head>
+<body>
+  <div id="blocklyDiv"></div>
+  <xml id="toolbox" style="display: none">
+    <category name="events" colour="#a55b80">
+      <block type="mousemove"></block>
+      <block type="kaboom" deletable="false" movable="false" editable="false"></block>
+      <block type="update" deletable="false" movable="false" editable="false"></block>
+    </category>
+    <category name="sprites" colour="#5ba55b">
+      <block type="loadbean"></block>
+      <block type="loadspritefromurl">
+        <field name="url">https:
+        <field name="name">name</field>
+      </block>
+    </category>
+    <category name="literals" colour="#745ba5">
+      <block type="string">
+        <field name="NAME">text here</field>
+      </block>
+    </category>
+    <category name="values" colour="#5b67a5">
+      <block type="mousex" deletable="false" movable="false" editable="false"></block>
+      <block type="mousey" deletable="false" movable="false" editable="false"></block>
+    </category>
+    <category name="variables" colour="#a5745b">
+      <block type="const" deletable="false" movable="false" editable="false">
+        <field name="varname">variable</field>
+        <field name="varvalue">value</field>
+      </block>
+      <block type="defvar">
+        <field name="name">variable</field>
+        <field name="val">value</field>
+      </block>
+      <block type="varnoval" deletable="false" movable="false" editable="false">
+        <field name="name">variable</field>
+      </block>
+      <block type="let" deletable="false" movable="false" editable="false">
+        <field name="varname">variable</field>
+      </block>
+      <block type="setvarunknowntype" deletable="false" movable="false" editable="false">
+        <field name="varname">variable</field>
+        <field name="varvalue">value</field>
+      </block>
+      <block type="getvar" deletable="false" movable="false" editable="false">
+        <field name="vartoget">variable</field>
+      </block>
+    </category>
+  </xml>
+  <script>
+const workspace = Blockly.inject('blocklyDiv', {
+  renderer: 'zelos',
+  toolbox: document.getElementById('toolbox'),
+  move: false,
+  trashcan: false,
+  readOnly: false,
+  theme: 'zelos',
+  scrollbars: false,
+});
+
+Blockly.Blocks.defineBlocksWithJsonArray([{
+  "type": "mousex",
+  "message0": "mouse x",
+  "output": "Number",
+  "colour": 230,
+  "tooltip": "gets the mouse position on the x axis.",
+  "helpUrl": ""
+},
+{
+  "type": "mousey",
+  "message0": "mouse y",
+  "output": "Number",
+  "colour": 230,
+  "tooltip": "gets the mouse position on the y axis.",
+  "helpUrl": ""
+},
+{
+  "type": "kaboom",
+  "message0": "on kaboom!",
+  "nextStatement": null,
+  "colour": 0,
+  "tooltip": "run the code underneath when the game starts",
+  "helpUrl": ""
+},
+{
+  "type": "update",
+  "message0": "on update",
+  "nextStatement": null,
+  "colour": 0,
+  "tooltip": "runs every game tick",
+  "helpUrl": ""
+},
+{
+  "type": "mousemove",
+  "message0": "on mouse move",
+  "nextStatement": null,
+  "colour": 0,
+  "tooltip": "runs on mouse movement",
+  "helpUrl": ""
+},
+{
+  "type": "string",
+  "message0": "string %1",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "text here"
+    }
+  ],
+  "inputsInline": true,
+  "output": null,
+  "colour": 255,
+  "tooltip": "used to define a string (\"\")",
+  "helpUrl": ""
+},
+{
+  "type": "loadspritefromurl",
+  "message0": "load sprite from %1 with name %2",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "url",
+      "text": "https://kaboomjs.com/sprites/bobo.png"
+    },
+    {
+      "type": "field_input",
+      "name": "name",
+      "text": "name"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 120,
+  "tooltip": "loads a sprite from a url containing an image",
+  "helpUrl": ""
+},
+{
+  "type": "loadbean",
+  "message0": "load bean",
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 120,
+  "tooltip": "loads the default bean sprite",
+  "helpUrl": ""
+},
+{
+  "type": "const",
+  "message0": "define constant variable %1 as %2",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "varname",
+      "text": "variable"
+    },
+    {
+      "type": "field_input",
+      "name": "varvalue",
+      "text": "value"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 30,
+  "tooltip": "defines a constant variable. it can not be set again.",
+  "helpUrl": ""
+},
+{
+  "type": "let",
+  "message0": "define let variable %1",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "varname",
+      "text": "variable"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 30,
+  "tooltip": "defines a let variable without a value",
+  "helpUrl": ""
+},
+{
+  "type": "getvar",
+  "message0": "get variable %1",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "vartoget",
+      "text": "variable"
+    }
+  ],
+  "output": null,
+  "colour": 30,
+  "tooltip": "gets the value of a variable",
+  "helpUrl": ""
+},
+{
+  "type": "varnoval",
+  "message0": "define variable %1",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "name",
+      "text": "variable"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 30,
+  "tooltip": "defines a variable without a value",
+  "helpUrl": ""
+},
+{
+  "type": "setvarunknowntype",
+  "message0": "set %1 to %2",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "varname",
+      "text": "variable"
+    },
+    {
+      "type": "field_input",
+      "name": "varvalue",
+      "text": "value"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 30,
+  "tooltip": "sets an already declared variable",
+  "helpUrl": ""
+},
+{
+  "type": "defvar",
+  "message0": "define variable %1 as %2",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "name",
+      "text": "variable"
+    },
+    {
+      "type": "field_input",
+      "name": "val",
+      "text": "value"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 30,
+  "tooltip": "",
+  "helpUrl": ""
+}]);
+
+Blockly.JavaScript.STATEMENT_PREFIX = '    ';
+Blockly.JavaScript.ADD_RETURN_STATEMENT_IF_FUNCTION = false;
+
+javascript.javascriptGenerator.forBlock['mousex'] = function(block, generator) {
+
+  var code = '...';
+
+  return [code, Blockly.javascript.ORDER_NONE];
+};
+
+javascript.javascriptGenerator.forBlock['mousey'] = function(block, generator) {
+
+  var code = '...';
+
+  return [code, Blockly.javascript.ORDER_NONE];
+};
+
+javascript.javascriptGenerator.forBlock['kaboom'] = function(block, generator) {
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['update'] = function(block, generator) {
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['mousemove'] = function(block, generator) {
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['string'] = function(block, generator) {
+  var text_name = block.getFieldValue('NAME');
+
+  var code = '...';
+
+  return [code, Blockly.javascript.ORDER_NONE];
+};
+
+javascript.javascriptGenerator.forBlock['loadspritefromurl'] = function(block, generator) {
+  var text_url = block.getFieldValue('url');
+  var text_name = block.getFieldValue('name');
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['loadbean'] = function(block, generator) {
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['const'] = function(block, generator) {
+  var text_varname = block.getFieldValue('varname');
+  var text_varvalue = block.getFieldValue('varvalue');
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['let'] = function(block, generator) {
+  var text_varname = block.getFieldValue('varname');
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['getvar'] = function(block, generator) {
+  var text_vartoget = block.getFieldValue('vartoget');
+
+  var code = '...';
+
+  return [code, Blockly.javascript.ORDER_NONE];
+};
+
+javascript.javascriptGenerator.forBlock['varnoval'] = function(block, generator) {
+  var text_name = block.getFieldValue('name');
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['setvarunknowntype'] = function(block, generator) {
+  var text_varname = block.getFieldValue('varname');
+  var text_varvalue = block.getFieldValue('varvalue');
+
+  var code = '...\n';
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['defvar'] = function(block, generator) {
+  var text_name = block.getFieldValue('name');
+  var text_val = block.getFieldValue('val');
+
+  var code = '...\n';
+  return code;
+};
+  </script>
+</body>
+</html>
