@@ -1,415 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Kaboom Blockly Page</title>
-  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
-<style>
-		body {
-			font-family: sans-serif;
-			margin: 0;
-			padding: 0;
-		}
+    <title>boboblocks</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-		#blocklyDiv {
-			height: 100vh;
-			display: flex;
-		}
+        #blocklyDiv {
+            height: 100vh;
+            display: flex;
+        }
 
-		#workspaceDiv {
-			flex: 1;
-		}
+        #workspaceDiv {
+            flex: 1;
+        }
 
-		#stageDiv {
-			flex: 0 0 30%;
-			border-left: 1px solid #ddd;
-			position: relative;
-			padding-top: 56.25%;
+        #stageDiv {
+            flex: 0 0 30%;
+            border-left: 1px solid #ddd;
+            position: relative;
+            padding-top: 56.25%;
 
-		}
+        }
 
-		#stageDisplay {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #ddd;
-		}
-	</style>
+        #stageDisplay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ddd;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="blocklyDiv">
-		<div id="workspaceDiv"></div>
-		<div id="stageDiv">
-			<div id="stageDisplay">
-				<button id="real">real</button></br><iframe id="evenmorereal"></iframe></div>
-			</div>
-		</div>
-  <xml id="toolbox" style="display: none">
-    <category name="events" colour="#a55b80">
-      <block type="mousemove"></block>
-      <block type="kaboom" deletable="false" movable="false" editable="false"></block>
-      <block type="update" deletable="false" movable="false" editable="false"></block>
-    </category>
-    <category name="sprites" colour="#5ba55b">
-      <block type="loadbean"></block>
-      <block type="loadspritefromurl">
-        <field name="url">https:
-        <field name="name">name</field>
-      </block>
-    </category>
-    <category name="literals" colour="#745ba5">
-      <block type="string">
-        <field name="NAME">text here</field>
-      </block>
-    </category>
-    <category name="values" colour="#5b67a5">
-      <block type="mousex" deletable="false" movable="false" editable="false"></block>
-      <block type="mousey" deletable="false" movable="false" editable="false"></block>
-    </category>
-    <category name="variables" colour="#a5745b">
-      <block type="const" deletable="false" movable="false" editable="false">
-        <field name="varname">variable</field>
-        <field name="varvalue">value</field>
-      </block>
-      <block type="defvar">
-        <field name="name">variable</field>
-        <field name="val">value</field>
-      </block>
-      <block type="varnoval" deletable="false" movable="false" editable="false">
-        <field name="name">variable</field>
-      </block>
-      <block type="let" deletable="false" movable="false" editable="false">
-        <field name="varname">variable</field>
-      </block>
-      <block type="setvarunknowntype" deletable="false" movable="false" editable="false">
-        <field name="varname">variable</field>
-        <field name="varvalue">value</field>
-      </block>
-      <block type="getvar" deletable="false" movable="false" editable="false">
-        <field name="vartoget">variable</field>
-      </block>
-    </category>
-  </xml>
-  <script>
-var workspace = Blockly.inject('workspaceDiv', {
-				toolbox: document.getElementById("toolbox"),
-				renderer: 'zelos'
-			});
-
-Blockly.defineBlocksWithJsonArray([{
-  "type": "mousex",
-  "message0": "mouse x",
-  "output": null,
-  "colour": 230,
-  "tooltip": "gets the mouse position on the x axis.",
-  "helpUrl": ""
-},
-{
-  "type": "mousey",
-  "message0": "mouse y",
-  "output": null,
-  "colour": 230,
-  "tooltip": "gets the mouse position on the y axis.",
-  "helpUrl": ""
-},
-{
-  "type": "kaboom",
-  "message0": "on kaboom!",
-  "nextStatement": null,
-  "colour": 0,
-  "tooltip": "run the code underneath when the game starts",
-  "helpUrl": ""
-},
-{
-  "type": "update",
-  "message0": "on update",
-  "nextStatement": null,
-  "colour": 0,
-  "tooltip": "runs every game tick",
-  "helpUrl": ""
-},
-{
-  "type": "mousemove",
-  "message0": "on mouse move",
-  "nextStatement": null,
-  "colour": 0,
-  "tooltip": "runs on mouse movement",
-  "helpUrl": ""
-},
-{
-  "type": "string",
-  "message0": "string %1",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "NAME",
-      "text": "text here"
-    }
-  ],
-  "inputsInline": true,
-  "output": null,
-  "colour": 255,
-  "tooltip": "used to define a string (\"\")",
-  "helpUrl": ""
-},
-{
-  "type": "loadspritefromurl",
-  "message0": "load sprite from %1 with name %2",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "url",
-      "text": "https://kaboomjs.com/sprites/bobo.png"
-    },
-    {
-      "type": "field_input",
-      "name": "name",
-      "text": "name"
-    }
-  ],
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 120,
-  "tooltip": "loads a sprite from a url containing an image",
-  "helpUrl": ""
-},
-{
-  "type": "loadbean",
-  "message0": "load bean",
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 120,
-  "tooltip": "loads the default bean sprite",
-  "helpUrl": ""
-},
-{
-  "type": "const",
-  "message0": "define constant variable %1 as %2 %3",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "varname",
-      "text": "variable"
-    },
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "input_value",
-      "name": "varvalue"
-    }
-  ],
-  "inputsInline": true,
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 30,
-  "tooltip": "defines a constant variable. it can not be set again.",
-  "helpUrl": ""
-},
-{
-  "type": "let",
-  "message0": "define let variable %1",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "varname",
-      "text": "variable"
-    }
-  ],
-  "inputsInline": true,
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 30,
-  "tooltip": "defines a let variable without a value",
-  "helpUrl": ""
-},
-{
-  "type": "getvar",
-  "message0": "get variable %1",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "vartoget",
-      "text": "variable"
-    }
-  ],
-  "inputsInline": true,
-  "output": null,
-  "colour": 30,
-  "tooltip": "gets the value of a variable",
-  "helpUrl": ""
-},
-{
-  "type": "varnoval",
-  "message0": "define variable %1",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "name",
-      "text": "variable"
-    }
-  ],
-  "inputsInline": true,
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 30,
-  "tooltip": "defines a variable without a value",
-  "helpUrl": ""
-},
-{
-  "type": "setvarunknowntype",
-  "message0": "set %1 to %2 %3",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "varname",
-      "text": "variable"
-    },
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "input_value",
-      "name": "varval"
-    }
-  ],
-  "inputsInline": true,
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 30,
-  "tooltip": "sets an already declared variable",
-  "helpUrl": ""
-},
-{
-  "type": "defvar",
-  "message0": "define variable %1 as %2 %3",
-  "args0": [
-    {
-      "type": "field_input",
-      "name": "name",
-      "text": "variable"
-    },
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "input_value",
-      "name": "varval"
-    }
-  ],
-  "inputsInline": true,
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 30,
-  "tooltip": "",
-  "helpUrl": ""
-}]);
-
-Blockly.JavaScript.STATEMENT_PREFIX = '    ';
-Blockly.JavaScript.ADD_RETURN_STATEMENT_IF_FUNCTION = false;
-
-javascript.javascriptGenerator.forBlock['mousex'] = function(block, generator) {
-  // TODO: Assemble javascript into code variable.
-  var code = '...';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.javascript.ORDER_NONE];
-};
-
-javascript.javascriptGenerator.forBlock['mousey'] = function(block, generator) {
-  // TODO: Assemble javascript into code variable.
-  var code = '...';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.javascript.ORDER_NONE];
-};
-
-javascript.javascriptGenerator.forBlock['kaboom'] = function(block, generator) {
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['update'] = function(block, generator) {
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['mousemove'] = function(block, generator) {
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['string'] = function(block, generator) {
-  var text_name = block.getFieldValue('NAME');
-  // TODO: Assemble javascript into code variable.
-  var code = '...';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.javascript.ORDER_NONE];
-};
-
-javascript.javascriptGenerator.forBlock['loadspritefromurl'] = function(block, generator) {
-  var text_url = block.getFieldValue('url');
-  var text_name = block.getFieldValue('name');
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['loadbean'] = function(block, generator) {
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['const'] = function(block, generator) {
-  var text_varname = block.getFieldValue('varname');
-  var value_varvalue = generator.valueToCode(block, 'varvalue', javascript.Order.ATOMIC);
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['let'] = function(block, generator) {
-  var text_varname = block.getFieldValue('varname');
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['getvar'] = function(block, generator) {
-  var text_vartoget = block.getFieldValue('vartoget');
-  // TODO: Assemble javascript into code variable.
-  var code = '...';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.javascript.ORDER_NONE];
-};
-
-javascript.javascriptGenerator.forBlock['varnoval'] = function(block, generator) {
-  var text_name = block.getFieldValue('name');
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['setvarunknowntype'] = function(block, generator) {
-  var text_varname = block.getFieldValue('varname');
-  var value_varval = generator.valueToCode(block, 'varval', javascript.Order.ATOMIC);
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-
-javascript.javascriptGenerator.forBlock['defvar'] = function(block, generator) {
-  var text_name = block.getFieldValue('name');
-  var value_varval = generator.valueToCode(block, 'varval', javascript.Order.ATOMIC);
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
-};
-  </script>
+    <div id="blocklyDiv">
+        <div id="workspaceDiv"></div>
+        <div id="stageDiv">
+            <div id="stageDisplay">
+                <button id="real">real</button></br><iframe id="evenmorereal"></iframe></div>
+        </div>
+    </div>
+    <script>
+        var toolbox = {
+            "kind": "categoryToolbox",
+            "contents": [
+                {
+                    "kind": "category",
+                    "name": "Game Obj",
+                    "contents": [
+                        { "kind": "block", "type": "add" },
+                        { "kind": "block", "type": "make" },
+                        { "kind": "block", "type": "readd" },
+                        { "kind": "block", "type": "get" },
+                        { "kind": "block", "type": "destroy" },
+                        { "kind": "block", "type": "destroyAll" }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Components",
+                    "contents": [
+                        { "kind": "block", "type": "pos" },
+                        { "kind": "block", "type": "scale" },
+                        { "kind": "block", "type": "rotate" },
+                        { "kind": "block", "type": "color" },
+                        { "kind": "block", "type": "opacity" },
+                        { "kind": "block", "type": "sprite" },
+                        { "kind": "block", "type": "text" },
+                        { "kind": "block", "type": "polygon" },
+                        { "kind": "block", "type": "rect" },
+                        { "kind": "block", "type": "circle" },
+                        { "kind": "block", "type": "uvquad" },
+                        { "kind": "block", "type": "area" },
+                        { "kind": "block", "type": "anchor" },
+                        { "kind": "block", "type": "z" },
+                        { "kind": "block", "type": "outline" },
+                        { "kind": "block", "type": "body" },
+                        { "kind": "block", "type": "doubleJump" },
+                        { "kind": "block", "type": "move" },
+                        { "kind": "block", "type": "offscreen" },
+                        { "kind": "block", "type": "follow" },
+                        { "kind": "block", "type": "shader" },
+                        { "kind": "block", "type": "timer" },
+                        { "kind": "block", "type": "fixed" },
+                        { "kind": "block", "type": "stay" },
+                        { "kind": "block", "type": "health" },
+                        { "kind": "block", "type": "lifespan" },
+                        { "kind": "block", "type": "state" },
+                        { "kind": "block", "type": "fadeIn" },
+                        { "kind": "block", "type": "mask" },
+                        { "kind": "block", "type": "drawon" },
+                        { "kind": "block", "type": "tile" },
+                        { "kind": "block", "type": "agent" }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Events",
+                    "contents": [
+                        { "kind": "block", "type": "on" },
+                        { "kind": "block", "type": "onUpdate" },
+                        { "kind": "block", "type": "onDraw" },
+                        { "kind": "block", "type": "onAdd" },
+                        { "kind": "block", "type": "onDestroy" },
+                        { "kind": "block", "type": "onLoad" },
+                        { "kind": "block", "type": "onLoading" },
+                        { "kind": "block", "type": "onError" },
+                        { "kind": "block", "type": "onResize" },
+                        { "kind": "block", "type": "onCleanup" },
+                        { "kind": "block", "type": "onGamepadConnect" },
+                        { "kind": "block", "type": "onGamepadDisconnect" },
+                        { "kind": "block", "type": "onCollide" },
+                        { "kind": "block", "type": "onCollideUpdate" },
+                        { "kind": "block", "type": "onCollideEnd" },
+                        { "kind": "block", "type": "onClick" },
+                        { "kind": "block", "type": "onHover" },
+                        { "kind": "block", "type": "onHoverUpdate" },
+                        { "kind": "block", "type": "onHoverEnd" },
+                        { "kind": "block", "type": "onKeyDown" },
+                        { "kind": "block", "type": "onKeyPress" },
+                        { "kind": "block", "type": "onKeyPressRepeat" },
+                        { "kind": "block", "type": "onKeyRelease" },
+                        { "kind": "block", "type": "onCharInput" },
+                        { "kind": "block", "type": "onMouseDown" },
+                        { "kind": "block", "type": "onMousePress" },
+                        { "kind": "block", "type": "onMouseRelease" },
+                        { "kind": "block", "type": "onMouseMove" },
+                        { "kind": "block", "type": "onTouchStart" },
+                        { "kind": "block", "type": "onTouchMove" },
+                        { "kind": "block", "type": "onTouchEnd" },
+                        { "kind": "block", "type": "onScroll" },
+                        { "kind": "block", "type": "onHide" },
+                        { "kind": "block", "type": "onShow" },
+                        { "kind": "block", "type": "onGamepadButtonDown" },
+                        { "kind": "block", "type": "onGamepadButtonPress" },
+                        { "kind": "block", "type": "onGamepadButtonRelease" },
+                        { "kind": "block", "type": "onGamepadStick" },
+                        { "kind": "block", "type": "onSceneLeave" }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Assets",
+                    "contents": [
+                        { "kind": "block", "type": "loadRoot" },
+                        { "kind": "block", "type": "loadSprite" },
+                        { "kind": "block", "type": "loadSpriteAtlas" },
+                        { "kind": "block", "type": "loadAseprite" },
+                        { "kind": "block", "type": "loadPedit" },
+                        { "kind": "block", "type": "loadBean" },
+                        { "kind": "block", "type": "loadJSON" },
+                        { "kind": "block", "type": "loadSound" },
+                        { "kind": "block", "type": "loadMusic" },
+                        { "kind": "block", "type": "loadFont" },
+                        { "kind": "block", "type": "loadBitmapFont" },
+                        { "kind": "block", "type": "loadShader" },
+                        { "kind": "block", "type": "loadShaderURL" },
+                        { "kind": "block", "type": "load" },
+                        { "kind": "block", "type": "loadProgress" },
+                        { "kind": "block", "type": "getSprite" },
+                        { "kind": "block", "type": "getSound" },
+                        { "kind": "block", "type": "getFont" },
+                        { "kind": "block", "type": "getBitmapFont" },
+                        { "kind": "block", "type": "getShader" },
+                        { "kind": "block", "type": "getAsset" }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Misc",
+                    "contents": [
+                        { "kind": "block", "type": "screenshot" },
+                        { "kind": "block", "type": "download" },
+                        { "kind": "block", "type": "downloadText" },
+                        { "kind": "block", "type": "downloadJSON" },
+                        { "kind": "block", "type": "downloadBlob" },
+                        { "kind": "block", "type": "record" },
+                        { "kind": "block", "type": "addKaboom" }
+                    ]
+                }
+            ]
+        };
+        var workspace = Blockly.inject('workspaceDiv', {
+            toolbox: toolbox,
+            renderer: 'zelos'
+        });
+        const button = document.getElementById("real");
+        const iframe = document.getElementById("evenmorereal");
+        button.addEventListener("click", function() {
+            const workspaceex = Blockly.getMainWorkspace();
+            const code = Blockly.JavaScript.workspaceToCode(workspaceex);
+            button.innerHTML = code;
+            iframe.style.width = "100%";
+            iframe.style.height = iframe.parentElement.clientWidth / 1.778;
+            iframe.src = 'data:text/html;charset=utf-8,<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><script src="https://unpkg.com/kaboom@3000.0.3/dist/kaboom.js"><' + '/script></head><body><script>' + code + '<' + '/script></body>';
+        });
+    </script>
 </body>
+
 </html>
