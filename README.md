@@ -12,5 +12,6 @@ raw code blocks are also included to add functions or other code you may need in
 
 ## who's bobo?
 bobo is the cute little fish in kaboom's sprite library
+
 ![picture of bobo](https://kaboomjs.com/sprites/bobo.png)
 
