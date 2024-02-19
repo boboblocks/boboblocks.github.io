@@ -10,3 +10,7 @@ it can also be a way to make kaboom games faster for people that are experienced
 
 raw code blocks are also included to add functions or other code you may need in your game that is not already represented by a block.
 
+## who's bobo?
+bobo is the cute little fish in kaboom's sprite library
+![picture of bobo](https://kaboomjs.com/sprites/bobo.png)
+
